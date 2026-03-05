@@ -1,0 +1,33 @@
+schemaVersion: 2.2.0
+metadata:
+  generateName: meta-workspace
+projects:
+    - name: che-integration-plugin
+      git:
+        remotes:
+          origin: https://github.com/msivasubramaniaan/jetbrains-ide-dev-server.git
+components:
+  - name: projects
+    volume:
+      size: 12Gi
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      endpoints:
+        - exposure: none
+          name: debug
+          protocol: tcp
+          targetPort: 5005
+        - exposure: public
+          name: list-all-food
+          protocol: http
+          targetPort: 8080
+          path: /food
+      memoryLimit: 6G
+      memoryRequest: 512Mi
+      cpuRequest: 1000m
+      cpuLimit: 4000m
+      mountSources: true
+      sourceMapping: /projects
+
+
